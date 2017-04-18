@@ -1,0 +1,23 @@
+<h1>Form for new Food</h1>
+
+<%= form_for [@cook,@food] do |f|%>
+  <%= f.label :title %>
+  <%= f.text_field :title %><br><br>
+
+  <%= f.label :cuisine %>
+  <%= f.text_field :cuisine %><br><br>
+
+  <%= f.label :price %>
+  <%= f.text_field :price %><br><br>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %><br><br>
+
+  <%= f.label :url %>
+  <%= f.text_field :url %><br><br>
+
+  <%= f.label :availability %>
+  <%= f.text_field :availability %><br><br>
+
+  <%= f.submit %>
+<% end %>

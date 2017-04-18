@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>cook show page</h1>
+    <img src="<%= @cook.image_url %>" alt="profile" width="60px" height="60px"><br>
+    <%= @cook.name %><br>
+    <%= @cook.email %><br>
+    <%= @cook.city %><br>
+    <%= @cook.neighborhood %><br>
+    <%= @cook.address %><br>
+    <%= @cook.description %><br>
+
+    <%= form_for @cook, method: :delete do|f| %><br>
+      <%= f.submit "delete account!" %>
+    <% end %>
+
+    <%= link_to "create new food item", new_cook_food_path %>
+    <!-- link_to "create new food item", "/cooks/#{@cook.id}/foods/new"  -->
+  </body>
+</html>

@@ -1,5 +1,6 @@
 class Food < ApplicationRecord
   belongs_to :cook
+  has_many :orders
 
   validates :title, presence: true
   validates :cuisine, presence: true

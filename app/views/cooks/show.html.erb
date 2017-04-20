@@ -5,9 +5,13 @@
     <title></title>
   </head>
   <body>
-    <h1>cook show page</h1>
     <img src="<%= @cook.image_url %>" alt="profile" width="60px" height="60px"><br>
     <%= @cook.name %><br>
+    <% if @cook.average_rating %>
+      <% @cook.average_rating.round.times do %>
+        <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-star-1.png" alt="profile" width="10px" height="10px">
+      <% end %><br>
+    <% end %>
     <%= @cook.email %><br>
     <%= @cook.city %><br>
     <%= @cook.neighborhood %><br>
@@ -16,9 +20,45 @@
 
     <%= form_for @cook, method: :delete do|f| %><br>
       <%= f.submit "delete account!" %>
+    <% end %><br><br><br><br>
+
+    <h2>Menu</h2>
+    <%= link_to "create new food item", new_cook_food_path(@cook.id) %><br><br>
+
+    <% @foods.each do |food|%>
+        <img src="<%= food.url %>" alt="food pic" width="160px" height="120px"><br>
+        <%= food.title %><br>
+        <%= food.cuisine %><br>
+        <%= food.price %><br>
+        <%= food.description %><br>
+        <%= food.availability %><br>
+        <!-- form_to "delete food item" if user is a cook -->
+        <%= form_for [@cook,food], method: :delete do|f| %>
+          <%= f.submit "delete food item" %>
+        <% end %><br>
+        <!-- form creates an order -->
+        <%= form_for [Customer.first, @order] do|f| %>
+          <%= f.hidden_field :food_id, :value => food.id %>
+          <%= f.hidden_field :customer_id, :value => Customer.first.id %>
+          <%= f.submit "order" %>
+        <% end %><br><br>
     <% end %>
 
-    <%= link_to "create new food item", new_cook_food_path %>
-    <!-- link_to "create new food item", "/cooks/#{@cook.id}/foods/new"  -->
+    <!-- REVIEWS SECTION -->
+    <%= form_for [Customer.first, @review] do|f| %>
+      <%= f.label :add_review %>
+      <%= f.text_area :content %>
+      <%= f.label :rating, "Rating (1-5)" %>
+      <%= f.text_field :rating %>
+      <%= f.hidden_field :customer_id, :value => Customer.first.id %>
+      <%= f.hidden_field :cook_id, :value => @cook.id %>
+      <%= f.submit "Create Review" %>
+    <% end %>
+
+    <% @reviews.each do |review| %>
+      <%= review.customer.name %><br>
+      <%= review.content%><br>
+      <%= review.rating %><br><br>
+    <% end %>
   </body>
 </html>

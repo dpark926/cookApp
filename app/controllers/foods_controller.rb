@@ -5,13 +5,13 @@ class FoodsController < ApplicationController
   end
 
   def create
+    get_cook
     @food = Food.new(food_params)
     if @food.valid?
       @food.save
-      redirect_to cook_path
+      redirect_to cook_path(@cook)
     else
-      # render 'new'  <<-- not working
-      # redirect_to create_food_path(params[:id])
+      redirect_to new_cook_food_path(@cook)
     end
   end
 
@@ -35,8 +35,9 @@ class FoodsController < ApplicationController
 
   def destroy
     get_food
+    get_cook
     @food.destroy
-    redirect_to root_path
+    redirect_to cook_path(@cook)
   end
 
   private
@@ -47,5 +48,9 @@ class FoodsController < ApplicationController
 
   def get_food
     @food = Food.find(params[:id])
+  end
+
+  def get_cook
+    @cook = Cook.find(params[:cook_id])
   end
 end

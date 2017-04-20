@@ -17,7 +17,10 @@ class CooksController < ApplicationController
 
   def show
     get_cook
-    @foods = @cook.foods
+    get_cook_foods
+    get_cook_reviews
+    @order = Order.new
+    @review = Review.new
   end
 
   def edit
@@ -48,5 +51,15 @@ class CooksController < ApplicationController
 
   def get_cook
     @cook = Cook.find(params[:id])
+  end
+
+  def get_cook_foods
+    get_cook
+    @foods = @cook.foods
+  end
+
+  def get_cook_reviews
+    get_cook
+    @reviews = @cook.reviews
   end
 end

@@ -1,0 +1,12 @@
+<img src="<%= @customer.image_url %>" alt="profile pic" width="120px" height="120px"><br>
+<%=@customer.name%><br>
+<%=@customer.email%><br>
+<%=@customer.city%><br><br>
+
+<% @orders.each do |order| %>
+<img src="<%= order.food.url %>" alt="food pic" width="160px" height="120px"><br>
+<%= order.food.title %><br>
+<%= order.food.cuisine %><br>
+<%= order.food.price %><br>
+<%= order.food.description %><br>
+<% end %>

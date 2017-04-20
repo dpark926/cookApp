@@ -1,0 +1,18 @@
+<h1>welcome to discover page</h1>
+
+<form action="" method="post">
+  select neighborhood
+  <input type="text" name="neighborhood">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="submit" value="submit">
+</form>
+
+<% if @cooks.present? %>
+  <% @cooks.each do |cook| %>
+    <%= cook.image_url %>
+    <%= cook.name %>
+    <% if cook.average_rating %>
+      <%= cook.average_rating %>
+    <% end %>
+  <% end %>
+<% end %>

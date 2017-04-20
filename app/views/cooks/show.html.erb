@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
+
+  <div class="row">
     <img src="<%= @cook.image_url %>" alt="profile" width="60px" height="60px"><br>
     <%= @cook.name %><br>
     <% if @cook.average_rating %>
@@ -27,31 +22,37 @@
     <% if cook_own_page? %>
       <%= link_to "create new food item", new_cook_food_path(@cook.id) %><br><br>
     <% end %><br>
+  </div>
 
     <!-- DISPLAY FOOD BELONGING TO COOK-->
-    <% @foods.each do |food|%>
-        <img src="<%= food.url %>" alt="food pic" width="160px" height="120px"><br>
-        <%= food.title %><br>
-        <%= food.cuisine %><br>
-        <%= food.price %><br>
-        <%= food.description %><br>
-        <%= food.availability %><br>
-        <!-- form_to "delete food item" if user is a cook -->
-        <% if cook_own_page? %>
-          <%= form_for [@cook,food], method: :delete do|f| %>
-            <%= f.submit "delete food item" %>
-          <% end %>
-        <%end%><br>
-        <!-- form creates an order -->
-        <% if logged_in? && !session[:cook_id]%>
-          <%= form_for [@customer, @order] do|f| %>
-            <%= f.hidden_field :food_id, :value => food.id %>
-            <%= f.hidden_field :customer_id, :value => @customer%>
-            <%= f.submit "order" %>
-          <% end %>
-        <% end %><br><br>
-    <% end %>
+    <div class="row">
+      <% @foods.each do |food|%>
+        <div class="col s4">
+          <img class="responsive-img" src="<%= food.url %>" alt="food pic"><br>
+          <%= food.title %><br>
+          <%= food.cuisine %><br>
+          <%= food.price %><br>
+          <%= food.description %><br>
+          <%= food.availability %><br>
+          <!-- form_to "delete food item" if user is a cook -->
+          <% if cook_own_page? %>
+            <%= form_for [@cook,food], method: :delete do|f| %>
+              <%= f.submit "delete food item" %>
+            <% end %>
+          <%end%><br>
+          <!-- form creates an order -->
+          <% if logged_in? && !session[:cook_id]%>
+            <%= form_for [@customer, @order] do|f| %>
+              <%= f.hidden_field :food_id, :value => food.id %>
+              <%= f.hidden_field :customer_id, :value => @customer%>
+              <%= f.submit "order" %>
+            <% end %>
+          <% end %><br><br>
+        </div>
+      <% end %>
+    </div>
 
+  <div class="row">
     <!-- REVIEWS SECTION -->
   <% if logged_in? && session[:customer_id]%>
     <%= form_for [@customer, @review] do|f| %>
@@ -70,5 +71,4 @@
       <%= review.content%><br>
       <%= review.rating %><br><br>
     <% end %>
-  </body>
-</html>
+  </div>

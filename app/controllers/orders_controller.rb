@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
 
   def create
     get_customer
-    @order = Order.new(order_params)
+    @order = Order.new(customer_id: params[:customer_id], food_id: params[:order][:food_id])
     if @order.valid?
       @order.save
       redirect_to customer_path(@customer)
@@ -41,9 +41,9 @@ class OrdersController < ApplicationController
 
   private
 
-  def order_params
-    params.require(:order).permit(:customer_id, :food_id)
-  end
+  # def order_params
+  #   params.require(:order).permit(:customer_id, :order[:food_id])
+  # end
 
   def get_order
     @order = Order.find(params[:id])

@@ -13,4 +13,8 @@ Rails.application.routes.draw do
 
   get '/discover' , to: 'discover#index' , as: 'discover'
   post '/discover', to: 'discover#index'
+
+  get '/login' , to: 'sessions#new' , as: :login
+  post '/sessions' , to: 'sessions#create', as: :create_session
+  get '/logout', to: 'sessions#destroy' , as: :destroy_session
 end

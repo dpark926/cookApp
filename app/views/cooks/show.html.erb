@@ -17,14 +17,18 @@
     <%= @cook.neighborhood %><br>
     <%= @cook.address %><br>
     <%= @cook.description %><br>
-
-    <%= form_for @cook, method: :delete do|f| %><br>
-      <%= f.submit "delete account!" %>
+    <% if cook_own_page? %>
+      <%= form_for @cook, method: :delete do|f| %><br>
+        <%= f.submit "delete account!" %>
+      <% end %>
     <% end %><br><br><br><br>
 
     <h2>Menu</h2>
-    <%= link_to "create new food item", new_cook_food_path(@cook.id) %><br><br>
+    <% if cook_own_page? %>
+      <%= link_to "create new food item", new_cook_food_path(@cook.id) %><br><br>
+    <% end %><br>
 
+    <!-- DISPLAY FOOD BELONGING TO COOK-->
     <% @foods.each do |food|%>
         <img src="<%= food.url %>" alt="food pic" width="160px" height="120px"><br>
         <%= food.title %><br>
@@ -33,27 +37,33 @@
         <%= food.description %><br>
         <%= food.availability %><br>
         <!-- form_to "delete food item" if user is a cook -->
-        <%= form_for [@cook,food], method: :delete do|f| %>
-          <%= f.submit "delete food item" %>
-        <% end %><br>
+        <% if cook_own_page? %>
+          <%= form_for [@cook,food], method: :delete do|f| %>
+            <%= f.submit "delete food item" %>
+          <% end %>
+        <%end%><br>
         <!-- form creates an order -->
-        <%= form_for [Customer.first, @order] do|f| %>
-          <%= f.hidden_field :food_id, :value => food.id %>
-          <%= f.hidden_field :customer_id, :value => Customer.first.id %>
-          <%= f.submit "order" %>
+        <% if logged_in? && !session[:cook_id]%>
+          <%= form_for [@customer, @order] do|f| %>
+            <%= f.hidden_field :food_id, :value => food.id %>
+            <%= f.hidden_field :customer_id, :value => @customer%>
+            <%= f.submit "order" %>
+          <% end %>
         <% end %><br><br>
     <% end %>
 
     <!-- REVIEWS SECTION -->
-    <%= form_for [Customer.first, @review] do|f| %>
+  <% if logged_in? && session[:customer_id]%>
+    <%= form_for [@customer, @review] do|f| %>
       <%= f.label :add_review %>
       <%= f.text_area :content %>
       <%= f.label :rating, "Rating (1-5)" %>
       <%= f.text_field :rating %>
-      <%= f.hidden_field :customer_id, :value => Customer.first.id %>
+      <%= f.hidden_field :customer_id, :value => @customer %>
       <%= f.hidden_field :cook_id, :value => @cook.id %>
       <%= f.submit "Create Review" %>
     <% end %>
+  <% end %>
 
     <% @reviews.each do |review| %>
       <%= review.customer.name %><br>

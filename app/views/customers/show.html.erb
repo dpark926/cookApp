@@ -3,10 +3,14 @@
 <%=@customer.email%><br>
 <%=@customer.city%><br><br>
 
-<% @orders.each do |order| %>
-<img src="<%= order.food.url %>" alt="food pic" width="160px" height="120px"><br>
-<%= order.food.title %><br>
-<%= order.food.cuisine %><br>
-<%= order.food.price %><br>
-<%= order.food.description %><br>
+<% if @orders.present? %>
+  <% @orders.each do |order| %>
+  <% if order.food %>
+    <img src="<%= order.food.url %>" alt="food pic" width="160px" height="120px"><br>
+    <%= order.food.title %><br>
+    <%= order.food.cuisine %><br>
+    <%= order.food.price %><br>
+    <%= order.food.description %><br>
+  <% end %>
+ <% end %>
 <% end %>

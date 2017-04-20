@@ -5,7 +5,8 @@ class ReviewsController < ApplicationController
 
   def create
     get_customer
-    @review = Review.new(review_params)
+
+    @review = Review.new(content: params[:review][:content], rating: params[:review][:rating], customer_id: params[:customer_id], cook_id: params[:review][:cook_id])
     if @review.valid?
       # byebug
       @review.save

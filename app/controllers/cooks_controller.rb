@@ -19,6 +19,7 @@ class CooksController < ApplicationController
     get_cook
     get_cook_foods
     get_cook_reviews
+    set_customer
     @order = Order.new
     @review = Review.new
   end

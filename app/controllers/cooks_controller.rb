@@ -8,6 +8,8 @@ class CooksController < ApplicationController
     # byebug
     if @cook.valid?
       @cook.save
+      session.clear
+      session[:cook_id] = @cook.id
       redirect_to cook_path(@cook)   #we want to log a cook in as soon as she creates profile
     else
       # render 'new'

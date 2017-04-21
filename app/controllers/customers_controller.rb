@@ -8,6 +8,8 @@ class CustomersController < ApplicationController
     # byebug
     if @customer.valid?
       @customer.save
+      session.clear
+      session[:customer_id] = @customer.id
       redirect_to customer_path(@customer)   #we want to log a customer in as soon as she creates profile
     else
       # render 'new'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419195613) do
+ActiveRecord::Schema.define(version: 20170421005603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20170419195613) do
     t.string   "neighborhood"
     t.string   "address"
     t.string   "description"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "image_url"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "image_url",       default: ""
   end
 
   create_table "customers", force: :cascade do |t|
@@ -33,9 +33,9 @@ ActiveRecord::Schema.define(version: 20170419195613) do
     t.string   "email"
     t.string   "password_digest"
     t.string   "city"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "image_url"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "image_url",       default: ""
   end
 
   create_table "foods", force: :cascade do |t|

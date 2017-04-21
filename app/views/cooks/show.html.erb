@@ -1,74 +1,98 @@
+<div class="row">
+    <div id="leftpanel" class = "col s10">
+      <!-- DISPLAY FOOD BELONGING TO COOK-->
+      <div class = "row">
+        <% @foods.each do |food|%>
+          <div class="col s4 card foodcard">
+            <div class = "picholder">
+              <img src="<%= food.url %>" alt="food pic" height=100% width=100% class="foodcardimg">
+            </div>
+            <span class = "foodtext"><%= food.title %></span>
+            <span class = "foodtext"><%= food.description %></span>
+            <div class = "order">
+              <span class = "order-cost">$ <%= food.price %></span>
+              <span class = "order-available">available | <%= food.availability %></span>
+            </div>
+            <!-- form_to "delete food item" if user is a cook -->
+            <% if cook_own_page? %>
+              <%= form_for [@cook,food], method: :delete do|f| %>
+                <%= f.submit "delete food item" %>
+              <% end %>
+            <%end%><br>
+            <!-- form creates an order -->
+            <% if logged_in? && !session[:cook_id]%>
 
-  <div class="row">
-    <img src="<%= @cook.image_url %>" alt="profile" width="60px" height="60px"><br>
-    <%= @cook.name %><br>
-    <% if @cook.average_rating %>
-      <% @cook.average_rating.round.times do %>
-        <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-star-1.png" alt="profile" width="10px" height="10px">
-      <% end %><br>
-    <% end %>
-    <%= @cook.email %><br>
-    <%= @cook.city %><br>
-    <%= @cook.neighborhood %><br>
-    <%= @cook.address %><br>
-    <%= @cook.description %><br>
-    <% if cook_own_page? %>
-      <%= form_for @cook, method: :delete do|f| %><br>
-        <%= f.submit "delete account!" %>
-      <% end %>
-    <% end %><br><br><br><br>
+                <%= form_for [@customer, @order] do|f| %>
+                  <%= f.hidden_field :food_id, :value => food.id %>
+                  <%= f.hidden_field :customer_id, :value => @customer%>
+                  <%= f.submit "order", class: 'btn' %>
+                  <% end %>
+                <% end %>
 
-    <h2>Menu</h2>
-    <% if cook_own_page? %>
-      <%= link_to "create new food item", new_cook_food_path(@cook.id) %><br><br>
-    <% end %><br>
-  </div>
+          </div>
+        <% end %><!--end foodcard-->
+      </div><!-- end food -->
 
-    <!-- DISPLAY FOOD BELONGING TO COOK-->
+    <!-- REVIEWS SECTION -->
     <div class="row">
-      <% @foods.each do |food|%>
-        <div class="col s4">
-          <img class="responsive-img" src="<%= food.url %>" alt="food pic"><br>
-          <%= food.title %><br>
-          <%= food.cuisine %><br>
-          <%= food.price %><br>
-          <%= food.description %><br>
-          <%= food.availability %><br>
-          <!-- form_to "delete food item" if user is a cook -->
-          <% if cook_own_page? %>
-            <%= form_for [@cook,food], method: :delete do|f| %>
-              <%= f.submit "delete food item" %>
-            <% end %>
-          <%end%><br>
-          <!-- form creates an order -->
-          <% if logged_in? && !session[:cook_id]%>
-            <%= form_for [@customer, @order] do|f| %>
-              <%= f.hidden_field :food_id, :value => food.id %>
-              <%= f.hidden_field :customer_id, :value => @customer%>
-              <%= f.submit "order" %>
-            <% end %>
-          <% end %><br><br>
+    <% if logged_in? && session[:customer_id]%>
+      <%= form_for [@customer, @review] do|f| %>
+        <%= f.label :add_review %>
+        <%= f.text_area :content %>
+        <%= f.label :rating, "Rating (1-5)" %>
+        <%= f.text_field :rating %>
+        <%= f.hidden_field :customer_id, :value => @customer %>
+        <%= f.hidden_field :cook_id, :value => @cook.id %>
+        <%= f.submit "Create Review" %>
+      <% end %>
+    <% end %>
+      <% @reviews.each do |review| %>
+        <div class = "review">
+          <div class = "review-top" >
+            <img src = "<%= review.customer.image_url%>" alt="profile" class="review-profile profilepic" height="70px" width="70px">
+            <div class = "review-detail-wrap">
+              <div class = "review-user"><%= review.customer.name %></div>
+              <div class = "review-date">April 19</div>
+            </div>
+          </div>
+          <div class = "review-bottom">
+            <p class = "review-text"><%= review.content %></p>
+          </div>
+          <hr width="600px" class = "review-hr">
         </div>
       <% end %>
-    </div>
+    </div><!--end reviews row-->
 
-  <div class="row">
-    <!-- REVIEWS SECTION -->
-  <% if logged_in? && session[:customer_id]%>
-    <%= form_for [@customer, @review] do|f| %>
-      <%= f.label :add_review %>
-      <%= f.text_area :content %>
-      <%= f.label :rating, "Rating (1-5)" %>
-      <%= f.text_field :rating %>
-      <%= f.hidden_field :customer_id, :value => @customer %>
-      <%= f.hidden_field :cook_id, :value => @cook.id %>
-      <%= f.submit "Create Review" %>
-    <% end %>
-  <% end %>
-
-    <% @reviews.each do |review| %>
-      <%= review.customer.name %><br>
-      <%= review.content%><br>
-      <%= review.rating %><br><br>
-    <% end %>
   </div>
+
+
+  <div id="rightpanel" class = "col s2">
+      <!--Cook information  -->
+      <div class = "cook-content">
+        <div class="row">
+          <div class = "cook-details">
+            <img src="<%= @cook.image_url %>" alt="profile" width="120px" height="120px"><br>
+            <%= @cook.name %><br>
+            <% if @cook.average_rating %>
+              <% @cook.average_rating.round.times do %>
+                <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-star-1.png" alt="profile" width="10px" height="10px">
+              <% end %><br>
+            <% end %>
+            <%= @cook.email %><br>
+            <%= @cook.city %><br>
+            <%= @cook.description %><br>
+            <% if cook_own_page? %>
+              <%= form_for @cook, method: :delete do|f| %><br>
+                <%= f.submit "delete account!" %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class = "cook-address">
+            <%= @cook.neighborhood %><br>
+            <hr>
+            <%= @cook.address %><br>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

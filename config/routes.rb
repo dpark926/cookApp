@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   end
 
   get '/discover' , to: 'discover#index' , as: 'discover'
-  post '/discover', to: 'discover#index'
+  get '/discover/:neighborhood', to: 'discover#index' 
+  # post '/discover', to: 'discover#index'
 
   get '/login' , to: 'sessions#new' , as: :login
   post '/sessions' , to: 'sessions#create', as: :create_session

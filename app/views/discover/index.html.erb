@@ -1,18 +1,42 @@
-<h1>welcome to discover page</h1>
+<style>
+citynav{
+  background: gray;
+  margin-bottom:40px;
+}
+.cityselect {
+  font-size:28px;
+  border-radius: 5px;
+  margin-right:20px;
+}
+.cookcard{
+  margin-bottom:80px;
+}
+</style>
+<h3>Neighborhood</h3>
+<hr>
 
-<form action="" method="post">
-  select neighborhood
-  <input type="text" name="neighborhood">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-  <input type="submit" value="submit">
-</form>
-
+<div class="citynav">
+  <span class = "cityselect"> <%= link_to "Chelsea", "/discover/chelsea" %> | </span>
+  <span class = "cityselect"> <%= link_to "Soho", "/discover/chelsea" %> | </span>
+  <span class = "cityselect"> <%= link_to "Tribeca", "/discover/chelsea" %> | </span>
+  <span class = "cityselect"> <%= link_to "Midtown", "/discover/chelsea" %> | </span>
+  <span class = "cityselect"> <%= link_to "Greenwich village", "/discover/chelsea" %> | </span>
+  <span class = "cityselect"> <%= link_to "East village", "/discover/chelsea" %> </span>
+</div>
+<hr>
+<div class = "row">
 <% if @cooks.present? %>
   <% @cooks.each do |cook| %>
-    <%= cook.image_url %>
-    <%= cook.name %>
-    <% if cook.average_rating %>
-      <%= cook.average_rating %>
+  <div class = "cookcard col s4">
+    <img src = "https://a0.muscache.com/im/pictures/3f10250d-db2e-4f68-b447-abbd9de3ddaf.jpg?aki_policy=xl_poster" height="350px" width="250px">
+    <h6>@ <%= link_to cook.name , cook_path(cook) %></h6>
+    <% if cook.average_rating.present? %>
+      <% cook.average_rating.round.times do %>
+        <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-star-1.png" alt="profile" width="10px" height="10px">
+      <% end %>
+      <%= cook.reviews.count%> reviews
     <% end %>
+  </div>
   <% end %>
 <% end %>
+</div>

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :logged_in? , :set_customer, :set_cook, :cook_own_page?, :profilepic
+  helper_method :logged_in? , :set_customer, :set_cook, :cook_own_page?, :profilepic , :customer_cart_count
   #
   def set_customer
     if logged_in? && !cook?
@@ -44,6 +44,15 @@ class ApplicationController < ActionController::Base
       else
         return ""
       end
+    end
+  end
+
+
+  def customer_cart_count
+    if session[:customer_id].present?
+      @count = Customer.find(session[:customer_id]).orders.count
+    else
+      return ""
     end
   end
 

@@ -2,6 +2,7 @@
 class DiscoverController < ApplicationController
   def index
     @cooks = Cook.where("neighborhood = '#{neighborhood}'")
+    @cart_count = customer_cart_count
   end
 
   private

@@ -1,16 +1,32 @@
-<img src="<%= @customer.image_url %>" alt="profile pic" width="120px" height="120px"><br>
-<%=@customer.name%><br>
-<%=@customer.email%><br>
-<%=@customer.city%><br><br>
+<style media="screen">
+#orders{
+  color:gray;
+}
+</style>
+<div class = "row">
+  <img src="<%= @customer.image_url %>" alt="profile pic" height="300px" class="profilepicture"><br>
+  <h5><%=@customer.name%></h5>
+  <h5><%=@customer.email%></h5>
+  <h5><%=@customer.city%></h5>
 
+</div>
 <% if @orders.present? %>
-  <% @orders.each do |order| %>
-  <% if order.food %>
-    <img src="<%= order.food.url %>" alt="food pic" width="160px" height="120px"><br>
-    <%= order.food.title %><br>
-    <%= order.food.cuisine %><br>
-    <%= order.food.price %><br>
-    <%= order.food.description %><br>
-  <% end %>
- <% end %>
+  <div class = "row">
+    <h4 id="orders">orders</h4>
+    <hr>
+    <% @orders.each do |order| %>
+    <% if order.food %>
+      <div class="col s4 card foodcard">
+        <div class = "picholder">
+          <img src="<%= order.food.url %>" alt="food pic" height=100% width=100% class="foodcardimg">
+        </div>
+        <span class = "foodtext"><%= order.food.title %></span>
+        <span class = "foodtext"><%= order.food.description %></span>
+        <div class = "order">
+          <span class = "order-cost">$ <%= order.food.price %></span>
+        </div>
+      </div>
+    <% end %>
+   <% end %>
+  </div>
 <% end %>

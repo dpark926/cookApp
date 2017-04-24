@@ -23,22 +23,22 @@
 
 }
 .cook-address{
-  margin-top:350px;
+  margin-top:220px;
 }
 #home{
   float:left;
   padding-top:10px;
+  margin-left:20px;
 }
 #navi{
+  position: fixed;
   padding-top:10px;
   padding-left:20px;
   height:60px;
 /*   background:green; */
 }
 #link1{
-  float:left;
-  margin-top:20px;
-  margin-left:40px;
+  margin-left:20px;
   font-family: 'Roboto', sans-serif;
 }
 .navlink {
@@ -57,19 +57,21 @@
   float:left;
   height:20px;
   width:20px;
-  margin-top:20px;
-  margin-right:20px;
-  background:#2ecc71;
-
+  margin-right:5px;
 }
 .profilepic{
   float:left;
+  margin-top:5px;
+  margin-right:20px;
   border-radius:50%;
 }
 .rightnavlinks{
   float:left;
   padding-top:20px;
   margin-left:40px;
+}
+#logoutlink{
+  margin-right:10px;
 }
 #settings{
   margin-right:20px;
@@ -133,6 +135,7 @@
 }
 .review-detail-wrap{
   float:left;
+  margin-top:-10px;
   height:100%;
   width:300px;
 }

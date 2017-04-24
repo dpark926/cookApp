@@ -1,13 +1,24 @@
+<style media="screen">
+  .reviewshead{
+    margin-top:90px;
+  }
+
+</style>
 <div class="row">
     <div id="leftpanel" class = "col s10">
       <!-- DISPLAY FOOD BELONGING TO COOK-->
       <div class = "row">
+        <h4>Menu</h4>
+        <% if cook_own_page? %>
+          <%= link_to "new food item" , new_cook_food_path(@cook)%>
+        <%end%><br>
+
         <% @foods.each do |food|%>
           <div class="col s4 card foodcard">
             <div class = "picholder">
               <img src="<%= food.url %>" alt="food pic" height=100% width=100% class="foodcardimg">
             </div>
-            <span class = "foodtext"><%= food.title %></span>
+            <span class = "foodtext"><%= food.title %></span><br>
             <span class = "foodtext"><%= food.description %></span>
             <div class = "order">
               <span class = "order-cost">$ <%= food.price %></span>
@@ -34,36 +45,42 @@
       </div><!-- end food -->
 
     <!-- REVIEWS SECTION -->
-    <div class="row">
-    <% if logged_in? && session[:customer_id]%>
-      <%= form_for [@customer, @review] do|f| %>
-        <%= f.label :add_review %>
-        <%= f.text_area :content %>
-        <%= f.label :rating, "Rating (1-5)" %>
-        <%= f.text_field :rating %>
-        <%= f.hidden_field :customer_id, :value => @customer %>
-        <%= f.hidden_field :cook_id, :value => @cook.id %>
-        <%= f.submit "Create Review" %>
-      <% end %>
-    <% end %>
+    <div class="row reviewshead">
+      <h4>Reviews</h4>
       <% @reviews.each do |review| %>
         <div class = "review">
-          <div class = "review-top" >
+          <div class = "row" >
             <img src = "<%= review.customer.image_url%>" alt="profile" class="review-profile profilepic" height="70px" width="70px">
             <div class = "review-detail-wrap">
               <div class = "review-user"><%= review.customer.name %></div>
               <div class = "review-date">April 19</div>
             </div>
           </div>
-          <div class = "review-bottom">
+          <div class = "row">
             <p class = "review-text"><%= review.content %></p>
+            <hr width="875px" class = "review-hr">
           </div>
-          <hr width="600px" class = "review-hr">
         </div>
       <% end %>
     </div><!--end reviews row-->
 
-  </div>
+    <div class="row">
+      <% if logged_in? && session[:customer_id]%>
+        <%= form_for [@customer, @review] do|f| %>
+          <%= f.label :add_review %>
+          <%= f.text_area :content , class:"materialize-textarea" %>
+          <%= f.label :rating, "rating (1-5)" %>
+          <%= f.text_field :rating%>
+          <%= f.hidden_field :customer_id, :value => @customer %>
+          <%= f.hidden_field :cook_id, :value => @cook.id %>
+          <%= f.submit "Create Review" , class: 'btn'%>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div><!--end left panel-->
+
+
 
 
   <div id="rightpanel" class = "col s2">

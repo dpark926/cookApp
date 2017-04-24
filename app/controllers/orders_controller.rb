@@ -6,11 +6,15 @@ class OrdersController < ApplicationController
   def create
     get_customer
     @order = Order.new(customer_id: params[:customer_id], food_id: params[:order][:food_id])
-    if @order.valid?
-      @order.save
-      redirect_to customer_path(@customer)
-    else
-      redirect_to root_path
+    @food = Food.find(params[:order][:food_id])
+    if @food.availability.to_i > 0
+      @food.update(availability: Food.find(params[:order][:food_id]).availability.to_i - 1)
+      if @order.valid?
+        @order.save
+        redirect_to customer_path(@customer)
+      else
+        redirect_to root_path
+      end
     end
   end
 

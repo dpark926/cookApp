@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170421005603) do
     t.string   "description"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.string   "image_url",       default: ""
+    t.string   "image_url",                    default: ""
   end
 
   create_table "customers", force: :cascade do |t|

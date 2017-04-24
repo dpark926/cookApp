@@ -1,3 +1,9 @@
+<style media="screen">
+  .signupform{
+    margin-top:20px;
+  }
+</style>
+<div class="signupform">
 <%= form_for @cook do |f|%>
   <%= f.label :name %>
   <%= f.text_field :name %><br><br>
@@ -23,5 +29,6 @@
   <%= f.label :profile_picture %>
   <%= f.text_field :image_url %><br><br>
 
-  <%= f.submit %>
+  <%= f.submit class:"btn" %>
 <% end %>
+</div>

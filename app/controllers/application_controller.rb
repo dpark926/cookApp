@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :logged_in? , :set_customer, :set_cook, :cook_own_page?, :profilepic , :customer_cart_count
+  helper_method :logged_in? , :set_customer, :set_cook, :cook_own_page?, :profilepic , :customer_cart_count, :customer_own_page?
   #
   def set_customer
     if logged_in? && !cook?
@@ -33,6 +33,13 @@ class ApplicationController < ActionController::Base
     if session[:cook_id]
       set_cook.id == params[:id].to_i
     end
+  end
+
+  def customer_own_page?
+    if session[:customer_id] == params[:id].to_i
+      return true
+    end
+    return false
   end
 
   def profilepic

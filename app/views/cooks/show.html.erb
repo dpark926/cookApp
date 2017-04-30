@@ -14,7 +14,7 @@
         <%end%><br>
 
         <% @foods.each do |food|%>
-          <div class="col s4 card foodcard">
+          <div class="col s4 card foodcard z-depth-3">
             <div class = "picholder">
               <img src="<%= food.url %>" alt="food pic" height=100% width=100% class="foodcardimg">
             </div>
@@ -36,7 +36,7 @@
                 <%= form_for [@customer, @order] do|f| %>
                   <%= f.hidden_field :food_id, :value => food.id %>
                   <%= f.hidden_field :customer_id, :value => @customer%>
-                  <%= f.submit "order", class: 'btn' %>
+                  <%= f.submit "order", class: 'btn orderbtn' %>
                   <% end %>
                 <% end %>
 
@@ -52,7 +52,7 @@
           <div class = "row" >
             <img src = "<%= review.customer.image_url%>" alt="profile" class="review-profile profilepic" height="70px" width="70px">
             <div class = "review-detail-wrap">
-              <div class = "review-user"><%= review.customer.name %></div>
+              <div class = "review-user"><%=link_to review.customer.name, customer_path(review.customer) %></div>
               <div class = "review-date">April 19</div>
             </div>
           </div>
@@ -89,7 +89,7 @@
         <div class="row">
           <div class = "cook-details">
             <img src="<%= @cook.image_url %>" alt="profile" width="120px" height="120px"><br>
-            <%= @cook.name %><br>
+            <%=@cook.name %><br>
             <% if @cook.average_rating %>
               <% @cook.average_rating.round.times do %>
                 <img src="https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-star-1.png" alt="profile" width="10px" height="10px">

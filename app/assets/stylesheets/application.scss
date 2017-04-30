@@ -82,11 +82,11 @@
 }
 /* STYLING FOR FOOD ITEM*/
 .foodcard{
-  height:350px;
   width:300px;
   margin-right:40px;
 }
 .picholder{
+  margin-top:10px;
   width:100%;
   height:220px;
   background-color:gray;
@@ -97,26 +97,23 @@
   width:100%;
 }
 .order{
+  font-weight: bold;
+  color:#34495e;
   margin-top:10px;
-  width:100%;
-  height:30px;
-  border-radius:5px;
-  padding-top:10px;
+  margin-bottom: 0px;
 }
 .order-cost{
-  padding-left:30px;
+  padding-left:20px;
 }
 .order-available{
   float:right;
   padding-right:30px;
 }
 .orderbtn{
-  margin-top:10px;
   width:100%;
-  height:30px;
   background-color:#2ecc71;
   border-radius:5px;
-  padding-top:10px;
+  margin-bottom:10px;
 }
 /* REVIEWS */
 .review{

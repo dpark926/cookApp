@@ -20,6 +20,7 @@ class CustomersController < ApplicationController
   def show
     get_customer
     get_customer_orders
+    @total = customer_total(@customer)
   end
 
   def edit
@@ -56,5 +57,8 @@ class CustomersController < ApplicationController
     get_customer
     @orders = @customer.orders
     # byebug
+  end
+  def customer_total(customer)
+    Order.customer_total(customer)
   end
 end

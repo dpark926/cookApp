@@ -1,0 +1,19 @@
+<div class = "row">
+  <h4 id="orders">orders</h4><span> total: <%= @total %></span>
+  <hr>
+  <% @orders.each do |order| %>
+  <% if order.food %>
+    <div class="col s4 card foodcard">
+      <div class = "picholder">
+        <img src="<%= order.food.url %>" alt="food pic" height=100% width=100% class="foodcardimg">
+      </div>
+      <span class = "foodtext"><%= link_to order.food.cook.name, cook_path(order.food.cook) %></span>
+      <span class = "foodtext"><%= order.food.title %></span>
+      <span class = "foodtext"><%= order.food.description %></span>
+      <div class = "order">
+        <span class = "order-cost">$ <%= order.food.price %></span>
+      </div>
+    </div>
+  <% end %>
+ <% end %>
+</div>

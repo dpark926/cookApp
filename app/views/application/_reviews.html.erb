@@ -1,0 +1,13 @@
+<div class = "review">
+  <div class = "row" >
+    <img src = "<%= review.customer.image_url%>" alt="profile" class="review-profile profilepic" height="70px" width="70px">
+    <div class = "review-detail-wrap">
+      <div class = "review-user"><%=link_to review.customer.name, customer_path(review.customer) %></div>
+      <div class = "review-date">April 19</div>
+    </div>
+  </div>
+  <div class = "row">
+    <p class = "review-text"><%= review.content %></p>
+    <hr width="875px" class = "review-hr">
+  </div>
+</div>
